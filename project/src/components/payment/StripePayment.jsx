@@ -10,7 +10,7 @@ const StripePayment = () => {
     const [clientSecret, setClientSecret] = useState("");
 
     useEffect(() => {
-        axios.post("http://localhost:3002/payment", {
+        axios.post("https://vindhuservercode.onrender.com/payment", {
             items: [{ name: "Momos", amount: 40.00 }] // Sending correct item data
         })
         .then((response) => {
