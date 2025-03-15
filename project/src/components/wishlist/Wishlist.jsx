@@ -19,7 +19,7 @@ const Wishlist = () => {
     if (!token) return;
 
     try {
-      const response = await fetch("http://localhost:3002/wishlist", {
+      const response = await fetch("https://vindhuservercode.onrender.com/wishlist", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -37,7 +37,7 @@ const Wishlist = () => {
     if (!token) return;
 
     try {
-      const response = await fetch("http://localhost:3002/restaurant", {
+      const response = await fetch("https://vindhuservercode.onrender.com/restaurant", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -55,7 +55,7 @@ const Wishlist = () => {
     if (!token) return;
 
     try {
-      const response = await fetch(`http://localhost:3002/wishlist/${dishId}`, {
+      const response = await fetch(`https://vindhuservercode.onrender.com/wishlist/${dishId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
