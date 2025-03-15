@@ -20,7 +20,7 @@ const Payment= () => {
       const resp = await stripe.confirmPayment({
           elements,
           confirmParams: {
-              return_url: window.location.origin + "/success", // Ensure correct URL
+              return_url: 'https://vindhuservercode.onrender.com' + "/success", // Ensure correct URL
           },
           redirect: "if_required", // ✅ Prevents iframe navigation issues
       });
