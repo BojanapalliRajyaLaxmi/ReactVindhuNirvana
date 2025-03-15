@@ -38,7 +38,7 @@ const Restaurant = () => {
     const end = `${selectedRestaurant.lon},${selectedRestaurant.lat}`;
 
     try {
-      const response = await fetch(`http://localhost:3002/route?start=${start}&end=${end}`);
+      const response = await fetch(`https://vindhuservercode.onrender.com/route?start=${start}&end=${end}`);
       const data = await response.json();
 
       if (data.features && data.features.length > 0) {
@@ -245,7 +245,7 @@ const Restaurant = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:3002/restaurant", {
+      const response = await fetch("https://vindhuservercode.onrender.com/restaurant", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
