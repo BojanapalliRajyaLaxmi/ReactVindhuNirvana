@@ -1,0 +1,152 @@
+.container {
+  width: auto;
+}
+
+/* Centering FAQ page content */
+.row.faq-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Section Headings */
+.section-head {
+  margin-bottom: 20px;
+}
+
+.dt-sc-sub-heading {
+  color: #ff6600;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.dt-sc-main-heading {
+  font-size: 28px;
+  margin-left: 10px;!important
+  font-weight: bold;
+}
+
+/* Two-column Layout for Desktop */
+.dt-sc-column.two-column {
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+
+/* FAQ Section */
+.dt-sc-faqs {
+  flex: 1;
+  padding: 10px;
+  min-width: 45%;
+  text-align: left;
+}
+
+.dt-sc-faqs_image {
+  flex: 1;
+  min-width: 45%;
+}
+
+/* Image Styling */
+.dt-sc-faqs_image img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  display: block;
+  margin: auto;
+}
+
+/* Accordion Container */
+.dt-sc-accordion-container {
+  width: 100%;
+}
+
+/* FAQ Item Styling */
+.faq-item {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.dt-sc-accordion-btn {
+  background: #f8f8f8;
+  padding: 12px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+}
+
+.dt-sc-accordion-btn:hover {
+  background: #eaeaea;
+}
+
+.dt-sc-accordion-btn.active {
+  background: #ff6600;
+  color: #fff;
+}
+
+.dt-sc-accordion-content {
+  display: none;
+  padding: 12px 15px;
+  background: #fff;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.dt-sc-accordion-content.open {
+  display: block;
+}
+
+/* 🔹 Responsive Design Adjustments */
+@media (max-width: 1024px) {
+  .dt-sc-column.two-column {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .dt-sc-faqs,
+  .dt-sc-faqs_image {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .dt-sc-main-heading {
+    font-size: 24px;
+  }
+
+  .dt-sc-sub-heading {
+    font-size: 16px;
+  }
+
+  .dt-sc-accordion-btn {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 30px 15px;
+  }
+
+  .dt-sc-main-heading {
+    font-size: 22px;
+  }
+
+  .dt-sc-sub-heading {
+    font-size: 14px;
+  }
+
+  .dt-sc-accordion-btn {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .dt-sc-accordion-content {
+    font-size: 14px;
+  }
+}

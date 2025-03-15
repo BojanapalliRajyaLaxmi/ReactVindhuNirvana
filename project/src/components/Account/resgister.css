@@ -1,0 +1,119 @@
+/* Global styles */
+body {
+  background: linear-gradient(135deg, #f9f9f9, #e3e3e3);
+  font-family: Arial, sans-serif;
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0; */
+}
+
+/* Container */
+#hello {
+  display: flex;
+  margin-top: 80px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 80%;
+  text-align: center;
+}
+.image {
+  max-width: 50%;
+  height: auto;
+  margin-bottom: 20px;
+}
+.inner {
+  width: 100%;
+}
+
+.form-wrapper {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border 0.3s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Checkbox */
+.checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.checkbox input {
+  margin-right: 8px;
+}
+
+/* Button */
+#btn {
+  width: 100%;
+  background: #4d8224;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+#btn:hover {
+  background: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .wrapper {
+    width: 100%;
+    padding: 20px;
+    flex-direction: column;
+  }
+  .image{
+    max-width: 200px;
+  }
+
+  .form-control {
+    max-width: 100%;
+  }
+
+  #btn {
+    max-width: 100%;
+  }
+}
