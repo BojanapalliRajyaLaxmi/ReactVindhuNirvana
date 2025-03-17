@@ -42,7 +42,7 @@ const Login = () => {
         <div>
         <div className="login-container">
             <ToastContainer />
-            <img src="/public/logoVindhu.png" alt="Logo" />
+            <img src="/logoVindhu.png" alt="Logo" />
             <div className="login-form">
                 <h2>Login</h2>
                 <form onSubmit={handleSubmit}>
