@@ -18,7 +18,7 @@ const Footer = () => {
           </p>
         </div>
         <div className="footer-column center">
-          <img src="public/logoVindhu.png" alt="Logo" className="footer-logo" />
+          <img src="/logoVindhu.png" alt="Logo" className="footer-logo" />
           <p className="footer-text">rajyalaxmiraji124@gmail.com</p>
           <p className="footer-text">+919133290263</p>
         </div>
