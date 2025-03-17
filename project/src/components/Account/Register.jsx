@@ -36,7 +36,7 @@ const Register = () => {
         <div id='hello'>
         <div className="wrapper">
             <ToastContainer />
-            <img src="/public/logoVindhu.png" className="image" alt="Logo" />
+            <img src="/logoVindhu.png" className="image" alt="Logo" />
             <div className="inner">
                 <form onSubmit={handleSubmit}>
                     <div className="form-wrapper">
