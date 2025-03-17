@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Footer.css";
 const Footer = () => {
   return (
@@ -18,18 +19,18 @@ const Footer = () => {
           </p>
         </div>
         <div className="footer-column center">
-          <img src="/logoVindhu.png" alt="Logo" className="footer-logo" />
+          <img src="public/logoVindhu.png" alt="Logo" className="footer-logo" />
           <p className="footer-text">rajyalaxmiraji124@gmail.com</p>
           <p className="footer-text">+919133290263</p>
         </div>
         <div className="footer-column">
-          <ul className="footer-links">
-            <li><a href="/">HOME</a></li>
-            <li><a href="/restaurant">Nirvana</a></li>
-            <li><a href="/states">States</a></li>
-            <li><a href="/feed">Feed</a></li>
-            <li><a href="/profile">Account</a></li>
-          </ul>
+        <ul className="footer-links">
+      <li><Link to="/">HOME</Link></li>
+      <li><Link to="/restaurant">Nirvana</Link></li>
+      <li><Link to="/states">States</Link></li>
+      <li><Link to="/feed">Feed</Link></li>
+      <li><Link to="/profile">Account</Link></li>
+    </ul>
         </div>
       </div>
       <div className="footer-bottom">
