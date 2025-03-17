@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -52,7 +53,9 @@ const Login = () => {
                     <label htmlFor="password">Password</label>
                     <input type="password" name="password" id="password" value={formData.password} onChange={handleChange} required /><br />
                     <input type="submit" value="Login" />
-                    <p>if doesn't have an account?<a href="/register">Register</a></p>
+                   <p>
+  If you don't have an account? <Link to="/register">Register</Link>
+</p>
                 </form>
             </div>
         </div>
