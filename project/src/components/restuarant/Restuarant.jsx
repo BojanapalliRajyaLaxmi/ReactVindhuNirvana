@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import "./restuarant.css";
@@ -11,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Polyline, Popup } from "react-leaflet";
 const OPENCAGE_API_KEY = "9828b2b94eb148eea5732cb0209e8eb8";
-
 const Restaurant = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -21,14 +19,11 @@ const Restaurant = () => {
   const [error, setError] = useState(null);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  // const [liked, setLiked] = useState(false);
   const [distance, setDistance] = useState(1000);
   const token = localStorage.getItem("tokenlogin");
   const [likedRestaurants, setLikedRestaurants] = useState([]);
   const [showWishlist, setShowWishlist] = useState(false);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [routeData, setRouteData] = useState(null);
-  // const [showMapModal, setShowMapModal] = useState(false);
   const [showRoute, setShowRoute] = useState(false);
   const [routeCoordinates, setRouteCoordinates] = useState([]);
   const fetchRoute = async () => {
@@ -38,7 +33,7 @@ const Restaurant = () => {
     const end = `${selectedRestaurant.lon},${selectedRestaurant.lat}`;
 
     try {
-      const response = await fetch(`https://vindhuservercode.onrender.com/route?start=${start}&end=${end}`);
+      const response = await fetch(`http://localhost:3002/route?start=${start}&end=${end}`);
       const data = await response.json();
 
       if (data.features && data.features.length > 0) {
@@ -71,11 +66,6 @@ const Restaurant = () => {
       fetchRoute();
     }
   }, [selectedRestaurant, userLocation]);
-
-  // const closeModal = () => {
-  //   setIsModalOpen(false);
-  //   setSelectedRestaurant(null);
-  // };
   const getUserLocation = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -245,7 +235,7 @@ const Restaurant = () => {
         return;
       }
 
-      const response = await fetch("https://vindhuservercode.onrender.com/restaurant", {
+      const response = await fetch("http://localhost:3002/restaurant", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -361,7 +351,6 @@ const Restaurant = () => {
                     >
                       👁️
                     </span>
-                    {/* <span className="add-to-cart-icon">🛒</span> */}
                   </div>
                 </div>
                 <h3 className="restaurant-name">{restaurant.name}</h3>
@@ -514,7 +503,7 @@ const Restaurant = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                padding: "15px",
+                padding: "25px",
                 borderRadius: "50%",
                 backgroundColor: "#fff",
                 boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
@@ -536,7 +525,20 @@ const Restaurant = () => {
                 }}
               />
             </span>
-            <span className="add-to-cart-icon">🛒</span>
+            <span className="add-to-cart-icon" style={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                position:'relative',
+                bottom:'45px',
+                left:'50px',
+                justifyContent: "center",
+                padding: "15px",
+                borderRadius: "50%",
+                backgroundColor: "#fff",
+                boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+                transition: "all 0.3s ease",
+              }}>🛒</span>
             <button
               onClick={() => setShowRoute(!showRoute)}
               style={{
