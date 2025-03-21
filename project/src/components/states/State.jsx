@@ -257,7 +257,7 @@ const addToCart = async (dish) => {
             className={`state-box ${selectedState === state ? "active" : ""}`}
             onClick={() => fetchStateData(state)}
           >
-            <span className="state-icon">{stateIcons[state]}</span> {state}
+            <span className="state-icon">{stateIcons[state]}&ensp;&Ensp;&ensp;&ensp;</span> {state}
           </button>
         ))}
       </div>
