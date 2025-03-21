@@ -9,6 +9,18 @@ import Skeleton from "../spinner/spinner";
 import { useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Polyline, Popup } from "react-leaflet";
+import L from "leaflet";
+
+// Custom marker icons
+const marker = new L.Icon({
+  iconUrl:
+    "https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/images/marker-icon.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 const OPENCAGE_API_KEY = "9828b2b94eb148eea5732cb0209e8eb8";
 const Restaurant = () => {
   const navigate = useNavigate();
@@ -568,13 +580,13 @@ const Restaurant = () => {
             >
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               {userLocation?.lat && userLocation?.lon && (
-                <Marker position={[userLocation.lat, userLocation.lon]}>
+                <Marker position={[userLocation.lat, userLocation.lon]} icon={marker}>
                   <Popup>Your Location</Popup>
                 </Marker>
               )}
               {selectedRestaurant?.lat && selectedRestaurant?.lon && (
                 <>
-                  <Marker position={[selectedRestaurant.lat, selectedRestaurant.lon]}>
+                  <Marker position={[selectedRestaurant.lat, selectedRestaurant.lon]} icon={marker}>
                     <Popup>Restaurant Location</Popup>
                   </Marker>
 
