@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import "./restuarant.css";
@@ -8,7 +8,13 @@ import Footer from "../footer/Footer";
 import Skeleton from "../spinner/spinner";
 import { useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Polyline, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Polyline,
+  Popup,
+} from "react-leaflet";
 import L from "leaflet";
 
 // Custom marker icons
@@ -45,7 +51,9 @@ const Restaurant = () => {
     const end = `${selectedRestaurant.lon},${selectedRestaurant.lat}`;
 
     try {
-      const response = await fetch(`https://vindhuservercode.onrender.com/route?start=${start}&end=${end}`);
+      const response = await fetch(
+        `http://localhost:3002/route?start=${start}&end=${end}`
+      );
       const data = await response.json();
 
       if (data.features && data.features.length > 0) {
@@ -53,10 +61,13 @@ const Restaurant = () => {
 
         if (route.properties?.segments?.length > 0) {
           const summary = route.properties.segments[0];
-          const coordinates = route.geometry.coordinates.map(([lon, lat]) => [lat, lon]);
+          const coordinates = route.geometry.coordinates.map(([lon, lat]) => [
+            lat,
+            lon,
+          ]);
 
           setRouteData({
-            distance: (summary.distance / 1000).toFixed(2), 
+            distance: (summary.distance / 1000).toFixed(2),
             duration: Math.round(summary.duration / 60),
           });
 
@@ -98,10 +109,10 @@ const Restaurant = () => {
       setError("Geolocation is not supported by your browser");
     }
   };
-  const handleShowMap = (restaurant) => {
-    setSelectedRestaurant(restaurant);
-    setShowMapModal(true);
-  };
+  // const handleShowMap = (restaurant) => {
+  //   setSelectedRestaurant(restaurant);
+  //   setShowMapModal(true);
+  // };
   const getUserAddress = async (lat, lon) => {
     try {
       let response = await fetch(
@@ -193,7 +204,7 @@ const Restaurant = () => {
             const address = await getRestaurantAddress(lat, lon);
             const randomImage =
               restaurantImages[
-              Math.floor(Math.random() * restaurantImages.length)
+                Math.floor(Math.random() * restaurantImages.length)
               ];
             return {
               name: tags.name || "Small Hotel",
@@ -283,7 +294,7 @@ const Restaurant = () => {
       if (isAlreadyLiked) {
         updatedList = updatedList.filter((name) => name !== restaurant.name);
         await axios.delete(
-          `https://vindhuservercode.onrender.com/restaurant/${restaurant.name}`,
+          `http://localhost:3002/restaurant/${restaurant.name}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -379,7 +390,10 @@ const Restaurant = () => {
       )}
 
       <Modal show={showModal} onHide={handleCloseModal} fullscreen>
-        <Modal.Header closeButton style={{ background: "#333", color: "wheat" }}>
+        <Modal.Header
+          closeButton
+          style={{ background: "#333", color: "wheat" }}
+        >
           <Modal.Title
             style={{
               fontSize: "2rem",
@@ -391,7 +405,15 @@ const Restaurant = () => {
             {selectedRestaurant?.name || "Restaurant Name"}
           </Modal.Title>
         </Modal.Header>
-<Modal.Body className="modal-body-flex" style={{ display: "flex", height: "85vh", gap: "20px", padding: "20px" }}>
+        <Modal.Body
+          className="modal-body-flex"
+          style={{
+            display: "flex",
+            height: "85vh",
+            gap: "20px",
+            padding: "20px",
+          }}
+        >
           <div
             style={{
               flex: "3",
@@ -412,7 +434,9 @@ const Restaurant = () => {
                 }}
               />
             ) : (
-              <p style={{ textAlign: "center", color: "gray" }}>No image available</p>
+              <p style={{ textAlign: "center", color: "gray" }}>
+                No image available
+              </p>
             )}
 
             <div
@@ -434,7 +458,8 @@ const Restaurant = () => {
                   color: "black",
                 }}
               >
-                {selectedRestaurant?.description || "A great place to enjoy delicious food!"}
+                {selectedRestaurant?.description ||
+                  "A great place to enjoy delicious food!"}
               </p>
               <p
                 style={{
@@ -443,7 +468,10 @@ const Restaurant = () => {
                   marginBottom: "5px",
                 }}
               >
-                ⭐ {selectedRestaurant?.rating || (Math.random() * 2 + 3).toFixed(1)} / 5
+                ⭐{" "}
+                {selectedRestaurant?.rating ||
+                  (Math.random() * 2 + 3).toFixed(1)}{" "}
+                / 5
               </p>
               <p style={{ fontSize: "1rem", color: "gray" }}>
                 {selectedRestaurant?.reviews
@@ -466,16 +494,37 @@ const Restaurant = () => {
                 <strong>Tables:</strong> {Math.floor(Math.random() * 10) + 1}
               </p>
               <p id="table">
-                <strong>Seats:</strong> {Math.floor(Math.random() * 6) + 1} per table
+                <strong>Seats:</strong> {Math.floor(Math.random() * 6) + 1} per
+                table
               </p>
               <p id="table">
-                <strong>Table Price:</strong> ₹{Math.floor(Math.random() * 500) + 500}
+                <strong>Table Price:</strong> ₹
+                {Math.floor(Math.random() * 500) + 500}
               </p>
               <Button
                 variant="primary"
-                style={{ width: "100%", padding: "10px", fontSize: "1.2rem", borderRadius: "8px", marginTop: "10px" }}
-                onClick={() => navigate(`/preorder?restaurant=${selectedRestaurant?.name}`)}
-              >
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  fontSize: "1.2rem",
+                  borderRadius: "8px",
+                  marginTop: "10px",
+                }}
+                onClick={() =>
+                  navigate('/booking')}>
+                Bookings
+              </Button>
+              <Button
+                variant="primary"
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  fontSize: "1.2rem",
+                  borderRadius: "8px",
+                  marginTop: "10px",
+                }}
+                onClick={() =>
+                  navigate('/preorder')}>
                 Preorder 🍽️
               </Button>
             </div>
@@ -491,7 +540,7 @@ const Restaurant = () => {
           >
             {selectedRestaurant?.address ? (
               <div style={{ textAlign: "center", marginBottom: "10px" }}>
-                <p
+                <p id='table'
                   style={{
                     fontSize: "1.3rem",
                     fontWeight: "bold",
@@ -500,16 +549,20 @@ const Restaurant = () => {
                 >
                   📍 {selectedRestaurant.address}
                 </p>
-                <p style={{ fontSize: "1.2rem", color: "gray" }}>
+                <p id='table' style={{ fontSize: "1.2rem", color: "gray" }}>
                   🍽️ {selectedRestaurant.cuisine || "Cuisine not specified"}
                 </p>
               </div>
             ) : (
-              <p style={{ color: "gray", textAlign: "center" }}>Address not available</p>
+              <p id='table' style={{ color: "gray", textAlign: "center" }}>
+                Address not available
+              </p>
             )}
             <span
               className="wishlist-icon"
-              onClick={() => selectedRestaurant && toggleLike(selectedRestaurant)}
+              onClick={() =>
+                selectedRestaurant && toggleLike(selectedRestaurant)
+              }
               style={{
                 cursor: "pointer",
                 display: "flex",
@@ -525,7 +578,7 @@ const Restaurant = () => {
               <img
                 src={
                   selectedRestaurant?.name &&
-                    likedRestaurants.includes(selectedRestaurant.name)
+                  likedRestaurants.includes(selectedRestaurant.name)
                     ? "https://img.icons8.com/?size=80&id=dKjAZULRJlO7&format=png"
                     : "https://img.icons8.com/?size=80&id=G3rOvlDYR75Z&format=png"
                 }
@@ -537,20 +590,25 @@ const Restaurant = () => {
                 }}
               />
             </span>
-            <span className="add-to-cart-icon" style={{
+            <span
+              className="add-to-cart-icon"
+              style={{
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
-                position:'relative',
-                bottom:'45px',
-                left:'50px',
+                position: "relative",
+                bottom: "45px",
+                left: "50px",
                 justifyContent: "center",
                 padding: "15px",
                 borderRadius: "50%",
                 backgroundColor: "#fff",
                 boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
                 transition: "all 0.3s ease",
-              }}>🛒</span>
+              }}
+            >
+              🛒
+            </span>
             <button
               onClick={() => setShowRoute(!showRoute)}
               style={{
@@ -568,25 +626,34 @@ const Restaurant = () => {
               {showRoute ? "Hide directions" : "Get directions"}
             </button>
             <MapContainer
-              center={[selectedRestaurant?.lat || 0, selectedRestaurant?.lon || 0]}
+              center={[
+                selectedRestaurant?.lat || 0,
+                selectedRestaurant?.lon || 0,
+              ]}
               zoom={10}
               style={{
                 height: "500px",
                 width: "100%",
                 maxWidth: "1200px",
                 borderRadius: "12px",
-                marginTop: "0px"
+                marginTop: "0px",
               }}
             >
               <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               {userLocation?.lat && userLocation?.lon && (
-                <Marker position={[userLocation.lat, userLocation.lon]} icon={marker}>
+                <Marker
+                  position={[userLocation.lat, userLocation.lon]}
+                  icon={marker}
+                >
                   <Popup>Your Location</Popup>
                 </Marker>
               )}
               {selectedRestaurant?.lat && selectedRestaurant?.lon && (
                 <>
-                  <Marker position={[selectedRestaurant.lat, selectedRestaurant.lon]} icon={marker}>
+                  <Marker
+                    position={[selectedRestaurant.lat, selectedRestaurant.lon]}
+                    icon={marker}
+                  >
                     <Popup>Restaurant Location</Popup>
                   </Marker>
 
@@ -602,12 +669,12 @@ const Restaurant = () => {
                       fontWeight: "bold",
                       backgroundColor: "rgba(110, 106, 106, 0.6)",
                       padding: "10px",
-                      width: '200px',
-                      borderRadius: "8px"
+                      width: "200px",
+                      borderRadius: "8px",
                     }}
                   >
-                    <p id='tables'>Distance: {routeData?.distance} km</p>
-                    <p id='tables'>Estimated Time: {routeData?.duration} min</p>
+                    <p id="tables">Distance: {routeData?.distance} km</p>
+                    <p id="tables">Estimated Time: {routeData?.duration} min</p>
                   </div>
                 </>
               )}
@@ -624,7 +691,6 @@ const Restaurant = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-
 
       <Footer />
     </div>
