@@ -539,7 +539,7 @@ const Restaurant = () => {
             }}
           >
             {selectedRestaurant?.address ? (
-              <div style={{ textAlign: "center", marginBottom: "10px" }}>
+              <div  id='table' style={{ textAlign: "center", marginBottom: "10px" }}>
                 <p id='table'
                   style={{
                     fontSize: "1.3rem",
