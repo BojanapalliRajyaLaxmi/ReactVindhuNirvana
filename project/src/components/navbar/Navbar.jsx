@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaHeart, FaUserCircle, FaShoppingCart, FaBars, FaSearch } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Dropdown, Space, Input,Drawer } from "antd";
+import { Dropdown, Space, Input, Drawer } from "antd";
 import { DownOutlined, SettingOutlined } from "@ant-design/icons";
 import "./Navbar.css";
 
@@ -18,7 +18,9 @@ const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    setTokenLogin(localStorage.getItem("tokenlogin"));
+    const token = localStorage.getItem("tokenlogin");
+    setTokenLogin(token);
+    setUsername(localStorage.getItem("userName") || "Guest");
   }, []);
 
   useEffect(() => {
@@ -48,6 +50,14 @@ const Navbar = () => {
     navigate("/");
   };
 
+  const navLinks = [
+    { path: "/", label: "Home" },
+    { path: "/restaurant", label: "Nirvana" },
+    { path: "/states", label: "States" },
+    { path: "/feed", label: "Feed" },
+    { path: "/profile", label: "Profile" },
+  ];
+
   const menuItems = [
     { key: "1", label: "My Account", disabled: true },
     { key: "2", label: <Link to="/profile"><SettingOutlined /> Settings</Link> },
@@ -56,16 +66,13 @@ const Navbar = () => {
     { type: "divider" },
     tokenLogin
       ? { key: "5", label: <span onClick={handleLogoutClick}>Log Out</span> }
-      : [
-          { key: "6", label: <span onClick={handleLoginClick}>Log In</span> },
-          { key: "7", label: <span onClick={handleSigninClick}>Sign Up</span> },
-        ],
-  ].flat();
+      : { key: "6", label: <span onClick={handleLoginClick}>Log In</span> },
+  ];
 
   return (
     <nav id="nav">
-      {/* Menu Icon */}
-      <div className="menu-icon">
+      {/* Menu Icon - Clicking this will open the Drawer */}
+      <div className="menu-icon" onClick={() => setIsDrawerOpen(true)}>
         <FaBars size={24} />
       </div>
 
@@ -74,7 +81,7 @@ const Navbar = () => {
         <FaSearch size={20} className="search-icon" onClick={() => setShowSearch(true)} />
       )}
 
-      {/* Mobile: Show Full Search Bar After Menu Icon */}
+      {/* Mobile: Show Full Search Bar */}
       {isMobile && (
         <Input.Search
           className="search-bar mobile-search"
@@ -89,17 +96,19 @@ const Navbar = () => {
 
       {/* Tablet: Expand Search Bar When Search Icon Clicked */}
       {isTablet && showSearch && (
-        <Input.Search
-          className="search-bar tablet-search"
-          placeholder="Search..."
-          allowClear
-          value={searchQuery}
-          onChange={(e) => handleSearchChange(e.target.value)}
-          onSearch={handleSearchSubmit}
-          onBlur={() => setShowSearch(false)} // Hide search bar when clicked outside
-          autoFocus
-          style={{ width: 200 }}
-        />
+        <div className="tablet-search-container">
+          <Input.Search
+            className="search-bar tablet-search"
+            placeholder="Search..."
+            allowClear
+            value={searchQuery}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            onSearch={handleSearchSubmit}
+            autoFocus
+            style={{ width: 200 }}
+          />
+          <button onClick={() => setShowSearch(false)}>X</button>
+        </div>
       )}
 
       {/* Logo */}
@@ -108,11 +117,11 @@ const Navbar = () => {
       {/* Navigation Links */}
       <ul className="nav-links">
         <div className="nav-links-center">
-          <li className={location.pathname === "/" ? "active" : ""}><Link to="/">Home</Link></li>
-          <li className={location.pathname === "/restaurant" ? "active" : ""}><Link to="/restaurant">Nirvana</Link></li>
-          <li className={location.pathname === "/states" ? "active" : ""}><Link to="/states">States</Link></li>
-          <li className={location.pathname === "/feed" ? "active" : ""}><Link to="/feed">Feed</Link></li>
-          <li className={location.pathname === "/profile" ? "active" : ""}><Link to="/profile">Profile</Link></li>
+          {navLinks.map((link) => (
+            <li key={link.path} className={location.pathname === link.path ? "active" : ""}>
+              <Link to={link.path}>{link.label}</Link>
+            </li>
+          ))}
         </div>
 
         {/* Desktop Search Bar */}
@@ -128,7 +137,7 @@ const Navbar = () => {
           />
         )}
 
-        {/* User Account */}
+        {/* User Account Dropdown */}
         <li className="account-icon">
           <span className="username">{username}</span>
           <Dropdown menu={{ items: menuItems }} trigger={["click"]}>
@@ -140,72 +149,43 @@ const Navbar = () => {
           </Dropdown>
         </li>
       </ul>
+
+      {/* Drawer Menu for Mobile */}
       <Drawer
         title="Menu"
         placement="left"
         onClose={() => setIsDrawerOpen(false)}
-        open={isDrawerOpen}
+        open={isDrawerOpen} // State now correctly controls drawer visibility
       >
         <ul className="sidebar-links">
-          <li onClick={() => setIsDrawerOpen(false)}>
-            <Link to="/">Home</Link>
-          </li>
-          <li onClick={() => setIsDrawerOpen(false)}>
-            <Link to="/restaurant">Nirvana</Link>
-          </li>
-          <li onClick={() => setIsDrawerOpen(false)}>
-            <Link to="/states">States</Link>
-          </li>
-          <li onClick={() => setIsDrawerOpen(false)}>
-            <Link to="/feed">Feed</Link>
-          </li>
-          <li onClick={() => setIsDrawerOpen(false)}>
-            <Link to="/profile">Profile</Link>
-          </li>
-          <li onClick={() => setIsDrawerOpen(false)}>
+          {navLinks.map((link) => (
+            <li key={link.path} onClick={() => setIsDrawerOpen(false)}>
+              <Link to={link.path}>{link.label}</Link>
+            </li>
+          ))}
+          <li>
             <Link to="/profile">
               <SettingOutlined /> Settings
             </Link>
           </li>
-          <li onClick={() => setIsDrawerOpen(false)}>
+          <li>
             <Link to="/cart">
               <FaShoppingCart /> Cart
             </Link>
           </li>
-          <li onClick={() => setIsDrawerOpen(false)}>
+          <li>
             <Link to="/wishlist">
               <FaHeart /> Wishlist
             </Link>
           </li>
           <li>
             {tokenLogin ? (
-              <span
-                onClick={() => {
-                  handleLogoutClick();
-                  setIsDrawerOpen(false);
-                }}
-              >
-                Log Out
-              </span>
+              <span onClick={() => { handleLogoutClick(); setIsDrawerOpen(false); }}>Log Out</span>
             ) : (
               <>
-                <span
-                  onClick={() => {
-                    handleLoginClick();
-                    setIsDrawerOpen(false);
-                  }}
-                >
-                  Log In
-                </span>
+                <span onClick={() => { handleLoginClick(); setIsDrawerOpen(false); }}>Log In</span>
                 <br />
-                <span
-                  onClick={() => {
-                    handleSigninClick();
-                    setIsDrawerOpen(false);
-                  }}
-                >
-                  Sign Up
-                </span>
+                <span onClick={() => { handleSigninClick(); setIsDrawerOpen(false); }}>Sign Up</span>
               </>
             )}
           </li>
